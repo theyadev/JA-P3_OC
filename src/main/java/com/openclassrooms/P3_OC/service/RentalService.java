@@ -3,8 +3,6 @@ package com.openclassrooms.P3_OC.service;
 import com.openclassrooms.P3_OC.model.Rental;
 import com.openclassrooms.P3_OC.repository.RentalRepository;
 
-import jakarta.websocket.MessageHandler.Partial;
-
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,8 +28,13 @@ public class RentalService {
         return rentalRepository.save(rental);
     }
 
-    public Rental updateRental(Integer id, Partial<Rental> rental) {
+    public Rental updateRental(Integer id, Rental rental) {
         Rental rentalToUpdate = rentalRepository.findById(id).orElse(null);
+
+        rentalToUpdate.setName(rental.getName());
+        rentalToUpdate.setSurface(rental.getSurface());
+        rentalToUpdate.setPrice(rental.getPrice());
+        rentalToUpdate.setDescription(rental.getDescription());
         
         return rentalRepository.save(rentalToUpdate);
     }
