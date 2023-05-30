@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.openclassrooms.P3_OC.model.Rental;
@@ -60,7 +59,6 @@ public class RentalController {
         Rental rental = this.createRentalFromRequest(rentalCreateRequest);
 
         return ResponseEntity.ok(rentalService.createRental(rental));
-
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
