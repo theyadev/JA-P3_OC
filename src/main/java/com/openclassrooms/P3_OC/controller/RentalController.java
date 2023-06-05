@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.openclassrooms.P3_OC.model.Rental;
-import com.openclassrooms.P3_OC.model.User;
 import com.openclassrooms.P3_OC.service.RentalService;
-import com.openclassrooms.P3_OC.service.UserService;
 import com.openclassrooms.P3_OC.types.RentalCreateRequest;
 
 @RestController
@@ -27,19 +25,18 @@ public class RentalController {
     @Autowired
     private RentalService rentalService;
 
-    @Autowired
-    private UserService userService;
     
     private Rental createRentalFromRequest(RentalCreateRequest rentalCreateRequest) {
         Rental rental = new Rental();
 
-        User owner = userService.getUserById(1);
+        // TODO: get user from session
+        // User owner = userService.getUserById(1);
 
         rental.setName(rentalCreateRequest.getName());
         rental.setSurface(rentalCreateRequest.getSurface());
         rental.setPrice(rentalCreateRequest.getPrice());
         rental.setDescription(rentalCreateRequest.getDescription()); 
-        rental.setOwner(owner);
+        // rental.setOwner(owner);
 
         return rental;
     }
