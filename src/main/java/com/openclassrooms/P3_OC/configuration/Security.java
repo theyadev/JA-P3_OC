@@ -38,7 +38,6 @@ public class Security {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                // disable Cross-Site Request Forgery
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(entryPoint).and()
                 // Spring Security will never create an HttpSession and it will never use it to
@@ -46,17 +45,12 @@ public class Security {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
                 // Authorize access to register and login
-                .requestMatchers(
-                        request -> request
-                                .getMethod().equals(HttpMethod.POST.name())
-                                && (request.getServletPath().equals("/api/auth/login")
-                                        || request.getServletPath().equals("/api/auth/register")))
+                .antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register")
                 .permitAll()
-                // Authorize access to swagger documentation, response status error, upload
-                // folder for images
-                // .requestMatchers("/v3/**", "/swagger-ui/**", "/error/**", "/images/**")
-                // .permitAll()
-                // user should be authenticated for any other request in application
+
+                .antMatchers("/v3/**", "/swagger-ui/**", "/error/**", "/images/**")
+                .permitAll()
+
                 .anyRequest()
                 .authenticated()
                 .and()

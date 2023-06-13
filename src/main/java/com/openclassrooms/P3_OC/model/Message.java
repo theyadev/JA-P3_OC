@@ -33,9 +33,9 @@ public class Message {
     private int id;
     private String message;
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private LocalDateTime updated_at;
 
     private Integer rental_id;
     private Integer user_id;

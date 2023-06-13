@@ -8,8 +8,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -40,11 +38,10 @@ public class Rental {
     private String picture;
     private String description;
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
     @LastModifiedDate
-    private LocalDateTime updatedAt;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    private LocalDateTime updated_at;
+
+    private Integer owner_id;
 
 }
