@@ -24,6 +24,17 @@ public class Security {
     @Autowired
     private RequestFilter requestFilter;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v2/**",
+            "/v3/**",
+            "/webjars/**",
+            "/error/**",
+            "/images/**",
+    };
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -40,23 +51,17 @@ public class Security {
         http
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(entryPoint).and()
-                // Spring Security will never create an HttpSession and it will never use it to
-                // obtain the Security Context
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
-                // Authorize access to register and login
                 .antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register")
                 .permitAll()
-
-                .antMatchers("/v3/**", "/swagger-ui/**", "/error/**", "/images/**")
+                .antMatchers(AUTH_WHITELIST)
                 .permitAll()
-
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
 
-        // Add a filter to validate the tokens with every request
         http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
